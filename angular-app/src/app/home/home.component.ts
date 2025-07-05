@@ -25,6 +25,13 @@ export class HomeComponent {
   }
 
   /**
+   * Opens the API Dashboard
+   */
+  openApiDashboard(): void {
+    this.router.navigate(['/dashboard']);
+  }
+
+  /**
    * Closes the modal dialog
    */
   closeModal(): void {

@@ -1,8 +1,20 @@
 <div class="analyzer-container">
+  <!-- Floating Emojis -->
+  <div class="floating-emojis">
+    <div class="emoji emoji-1">🚀</div>
+    <div class="emoji emoji-2">💻</div>
+    <div class="emoji emoji-3">⚡</div>
+    <div class="emoji emoji-4">🔥</div>
+    <div class="emoji emoji-5">💡</div>
+    <div class="emoji emoji-6">🎯</div>
+    <div class="emoji emoji-7">🌟</div>
+    <div class="emoji emoji-8">💫</div>
+  </div>
+  
   <div class="content">
     <!-- Header -->
     <div class="header">
-      <h1>🔍 API Analyzer</h1>
+      <h1><span class="magnifying-glass">🔍</span> API Analyzer</h1>
       <p class="api-name">Testing: <span>{{ apiName }}</span></p>
       <button class="btn-home" (click)="goBackHome()">← Back to Home</button>
     </div>
@@ -41,11 +53,17 @@
           >
           <button 
             class="run-btn"
+            [class.rocket-flying]="isRocketFlying"
             (click)="runApi()"
             [disabled]="isLoading || !apiUrl.trim()">
             <span *ngIf="!isLoading">🚀 RUN</span>
             <span *ngIf="isLoading">⏳ Running...</span>
           </button>
+        </div>
+        
+        <!-- Flying Rocket Animation -->
+        <div class="rocket-container" *ngIf="isRocketFlying">
+          <div class="flying-rocket">🚀</div>
         </div>
       </div>
 

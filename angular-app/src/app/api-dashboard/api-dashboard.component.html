@@ -1,0 +1,137 @@
+<div class="dashboard-container">
+  <!-- Floating Background Particles -->
+  <div class="particles">
+    <div class="particle particle-1">📊</div>
+    <div class="particle particle-2">📈</div>
+    <div class="particle particle-3">⚡</div>
+    <div class="particle particle-4">🚀</div>
+    <div class="particle particle-5">💫</div>
+    <div class="particle particle-6">✨</div>
+  </div>
+
+  <!-- Header Section -->
+  <div class="header-section">
+    <div class="back-button-container">
+      <button class="back-button" (click)="goBackHome()">
+        <span class="back-icon">←</span>
+        <span>Back to Home</span>
+      </button>
+    </div>
+    
+    <h1 class="dashboard-title">
+      <span class="title-icon">📊</span>
+      APIs Dashboard
+      <span class="refresh-icon" (click)="refreshData()">🔄</span>
+    </h1>
+    
+    <p class="dashboard-subtitle">
+      Monitor and manage all your API endpoints
+    </p>
+  </div>
+
+  <!-- Summary Stats -->
+  <div class="stats-container" *ngIf="!isLoading && !error">
+    <div class="stat-card stat-total">
+      <div class="stat-icon">📈</div>
+      <div class="stat-number">{{ apis.length }}</div>
+      <div class="stat-label">Total APIs</div>
+    </div>
+    
+    <div class="stat-card stat-success">
+      <div class="stat-icon">✅</div>
+      <div class="stat-number">{{ getSuccessCount() }}</div>
+      <div class="stat-label">Success</div>
+    </div>
+    
+    <div class="stat-card stat-failed">
+      <div class="stat-icon">❌</div>
+      <div class="stat-number">{{ getFailedCount() }}</div>
+      <div class="stat-label">Failed</div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <p class="loading-text">Loading your APIs...</p>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-container" *ngIf="error && !isLoading">
+    <div class="error-content">
+      <div class="error-icon">⚠️</div>
+      <h3 class="error-title">Oops! Something went wrong</h3>
+      <p class="error-message">{{ error }}</p>
+      <button class="retry-button" (click)="refreshData()">
+        <span class="retry-icon">🔄</span>
+        Try Again
+      </button>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-container" *ngIf="!isLoading && !error && apis.length === 0">
+    <div class="empty-content">
+      <div class="empty-icon">📭</div>
+      <h3 class="empty-title">No APIs Found</h3>
+      <p class="empty-message">Start by analyzing your first API!</p>
+      <button class="empty-action-button" (click)="goBackHome()">
+        <span class="button-icon">🎯</span>
+        Analyze an API
+      </button>
+    </div>
+  </div>
+
+  <!-- API Cards Grid -->
+  <div class="cards-container" *ngIf="!isLoading && !error && apis.length > 0">
+    <div class="api-card" *ngFor="let api of apis; let i = index" 
+         [style.animation-delay]="(i * 0.1) + 's'">
+      
+      <!-- Card Header -->
+      <div class="card-header">
+        <div class="api-name">
+          <span class="api-icon">🔗</span>
+          {{ api.apiName }}
+        </div>
+        <div class="status-badge" [ngClass]="getStatusClass(api.apiStatusCode)" *ngIf="api.apiStatusCode">
+          {{ getStatusText(api.apiStatusCode) }}
+        </div>
+      </div>
+
+      <!-- Card Body -->
+      <div class="card-body">
+        <div class="api-info">
+          <div class="info-item" *ngIf="api.apiUrl">
+            <span class="info-label">URL:</span>
+            <span class="info-value api-url">{{ api.apiUrl }}</span>
+          </div>
+          
+          <div class="info-item">
+            <span class="info-label">Last Tested:</span>
+            <span class="info-value">{{ formatDate(api.createdAt) }}</span>
+          </div>
+          
+          <div class="info-item" *ngIf="api.responseMessage">
+            <span class="info-label">Response:</span>
+            <span class="info-value response-message">{{ api.responseMessage }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Actions -->
+      <div class="card-actions">
+        <button class="action-button docs-btn" (click)="viewApiDocumentation(api.apiName)">
+          <span class="action-icon">📚</span>
+          API Documentation
+        </button>
+        
+        <button class="action-button test-btn" (click)="analyzeApi(api.apiName)">
+          <span class="action-icon">🧪</span>
+          Test Now
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
