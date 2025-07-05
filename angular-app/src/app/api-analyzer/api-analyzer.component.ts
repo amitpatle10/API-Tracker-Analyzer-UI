@@ -34,6 +34,9 @@ export class ApiAnalyzerComponent implements OnInit {
   // Log Error Control
   isErrorLogged: boolean = false;
   isLoggingError: boolean = false;
+  
+  // Animation Control
+  isRocketFlying: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -66,6 +69,14 @@ export class ApiAnalyzerComponent implements OnInit {
       alert('Please enter an API URL');
       return;
     }
+
+    // Trigger rocket animation
+    this.isRocketFlying = true;
+    
+    // Reset rocket animation after 2 seconds
+    setTimeout(() => {
+      this.isRocketFlying = false;
+    }, 2000);
 
     this.isLoading = true;
     this.hasError = false;

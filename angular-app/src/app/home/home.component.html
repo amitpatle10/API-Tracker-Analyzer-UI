@@ -1,26 +1,75 @@
 <div class="home-container">
+  <!-- Floating Background Particles -->
+  <div class="particles">
+    <div class="particle particle-1">💫</div>
+    <div class="particle particle-2">⭐</div>
+    <div class="particle particle-3">✨</div>
+    <div class="particle particle-4">🌟</div>
+    <div class="particle particle-5">💨</div>
+    <div class="particle particle-6">⚡</div>
+  </div>
+
+  <!-- Animated Title Section -->
+  <div class="title-section">
+    <h1 class="animated-title">
+      <span class="title-word title-word-1">API</span>
+      <span class="title-word title-word-2">Tracker</span>
+      <span class="title-word title-word-3">&</span>
+      <span class="title-word title-word-4">Analyzer</span>
+    </h1>
+    <p class="subtitle">
+      <span class="subtitle-icon">🚀</span>
+      Test and analyze your APIs with style
+      <span class="subtitle-icon">🔍</span>
+    </p>
+  </div>
+
+  <!-- Main Button Container -->
   <div class="button-container">
     <button class="analyze-button" (click)="openApiNameDialog()">
-      Analyze an API
+      <span class="button-icon">🎯</span>
+      <span class="button-text">Analyze an API</span>
+      <span class="button-glow"></span>
     </button>
+  </div>
+
+  <!-- Floating Action Hints -->
+  <div class="floating-hints">
+    <div class="hint hint-1">Click to start! 👆</div>
+    <div class="hint hint-2">Fast & Easy 🚄</div>
+    <div class="hint hint-3">Real-time results ⚡</div>
   </div>
 </div>
 
-<!-- Modal/Dialog for API name input -->
+<!-- Enhanced Modal/Dialog with animations -->
 <div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
   <div class="modal-content" (click)="$event.stopPropagation()">
-    <h3>Enter API Name</h3>
-    <input 
-      type="text" 
-      [(ngModel)]="apiName" 
-      placeholder="Enter API name..."
-      class="api-input"
-      (keyup.enter)="analyzeApi()"
-    >
+    <div class="modal-header">
+      <h3>🏷️ Enter API Name</h3>
+      <div class="modal-decoration">
+        <span class="deco-1">🌈</span>
+        <span class="deco-2">✨</span>
+        <span class="deco-3">🌈</span>
+      </div>
+    </div>
+    
+    <div class="input-container">
+      <input 
+        type="text" 
+        [(ngModel)]="apiName" 
+        placeholder="Enter a descriptive API name..."
+        class="api-input"
+        (keyup.enter)="analyzeApi()"
+      >
+      <div class="input-underline"></div>
+    </div>
+    
     <div class="modal-buttons">
-      <button class="btn-cancel" (click)="closeModal()">Cancel</button>
+      <button class="btn-cancel" (click)="closeModal()">
+        <span>❌ Cancel</span>
+      </button>
       <button class="btn-analyze" (click)="analyzeApi()" [disabled]="!apiName.trim()">
-        Analyze
+        <span>🚀 Let's Analyze!</span>
       </button>
     </div>
   </div>
