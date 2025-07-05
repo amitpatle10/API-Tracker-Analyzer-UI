@@ -1,0 +1,185 @@
+<div class="docs-container">
+  <!-- Floating Background Particles -->
+  <div class="particles">
+    <div class="particle particle-1">📚</div>
+    <div class="particle particle-2">📖</div>
+    <div class="particle particle-3">📑</div>
+    <div class="particle particle-4">🔍</div>
+    <div class="particle particle-5">💾</div>
+    <div class="particle particle-6">⚡</div>
+  </div>
+
+  <!-- Header Section -->
+  <div class="header-section">
+    <div class="back-button-container">
+      <button class="back-button" (click)="goBackToDashboard()">
+        <span class="back-icon">←</span>
+        <span>Back to Dashboard</span>
+      </button>
+    </div>
+    
+    <h1 class="docs-title">
+      <span class="title-icon">📚</span>
+      API Documentation
+      <span class="refresh-icon" (click)="refreshHistory()">🔄</span>
+    </h1>
+    
+    <div class="api-name-display" *ngIf="apiName">
+      <span class="api-icon">🔗</span>
+      {{ apiName }}
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <p class="loading-text">Loading API history...</p>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-container" *ngIf="error && !isLoading">
+    <div class="error-content">
+      <div class="error-icon">⚠️</div>
+      <h3 class="error-title">Oops! Something went wrong</h3>
+      <p class="error-message">{{ error }}</p>
+      <button class="retry-button" (click)="refreshHistory()">
+        <span class="retry-icon">🔄</span>
+        Try Again
+      </button>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-container" *ngIf="!isLoading && !error && apiHistory.length === 0">
+    <div class="empty-content">
+      <div class="empty-icon">📭</div>
+      <h3 class="empty-title">No History Found</h3>
+      <p class="empty-message">This API hasn't been tested yet!</p>
+      <button class="empty-action-button" (click)="goBackToDashboard()">
+        <span class="button-icon">📊</span>
+        Go to Dashboard
+      </button>
+    </div>
+  </div>
+
+  <!-- API History Content -->
+  <div class="history-container" *ngIf="!isLoading && !error && apiHistory.length > 0">
+    
+    <!-- API Info Summary -->
+    <div class="api-summary-card" *ngIf="apiHistory.length > 0">
+      <div class="summary-header">
+        <h3 class="summary-title">
+          <span class="summary-icon">ℹ️</span>
+          API Information
+        </h3>
+      </div>
+      <div class="summary-content">
+        <div class="info-row">
+          <span class="info-label">API Name:</span>
+          <span class="info-value">{{ apiHistory[0].apiName }}</span>
+        </div>
+        <div class="info-row" *ngIf="apiHistory[0].apiUrl">
+          <span class="info-label">API URL:</span>
+          <span class="info-value api-url">{{ apiHistory[0].apiUrl }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Total Tests:</span>
+          <span class="info-value">{{ apiHistory.length }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- History Timeline -->
+    <div class="timeline-container">
+      <h3 class="timeline-title">
+        <span class="timeline-icon">📊</span>
+        Response History (Last 5 Tests)
+      </h3>
+      
+      <div class="timeline-items">
+        <div class="timeline-item" *ngFor="let item of apiHistory; let i = index"
+             [style.animation-delay]="(i * 0.1) + 's'">
+          
+          <!-- Timeline Marker -->
+          <div class="timeline-marker" [ngClass]="getStatusClass(item.apiStatusCode)">
+            <span class="marker-icon">{{ getStatusText(item.apiStatusCode) === 'Success' ? '✅' : '❌' }}</span>
+          </div>
+          
+          <!-- Timeline Content -->
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <div class="test-info">
+                <span class="test-number">Test #{{ i + 1 }}</span>
+                <span class="status-badge" [ngClass]="getStatusClass(item.apiStatusCode)">
+                  {{ getStatusText(item.apiStatusCode) }}
+                </span>
+                <span class="status-code">{{ item.apiStatusCode }}</span>
+              </div>
+              <div class="test-date">{{ formatDate(item.createdAt) }}</div>
+            </div>
+            
+            <div class="timeline-body">
+              <div class="response-section">
+                <div class="response-header" (click)="toggleResponse(i)">
+                  <span class="response-label">Response Message</span>
+                  <span class="response-preview">{{ getResponsePreview(item.responseMessage) }}</span>
+                  <span class="expand-icon" [class.expanded]="isResponseExpanded(i)">
+                    {{ isResponseExpanded(i) ? '▼' : '▶' }}
+                  </span>
+                </div>
+                
+                <!-- Expanded Response Content -->
+                <div class="response-content" *ngIf="isResponseExpanded(i)">
+                  <!-- HTML Response -->
+                  <div class="html-response" *ngIf="isHtmlResponse(item.responseMessage)">
+                    <div class="response-tabs">
+                      <button 
+                        class="tab-button" 
+                        [class.active]="!isPreviewTabActive(i)"
+                        (click)="setActiveTab(i, false)">
+                        Raw HTML
+                      </button>
+                      <button 
+                        class="tab-button" 
+                        [class.active]="isPreviewTabActive(i)"
+                        (click)="setActiveTab(i, true)">
+                        Preview
+                      </button>
+                    </div>
+                    
+                    <!-- Raw HTML Tab Content -->
+                    <div class="tab-content" *ngIf="!isPreviewTabActive(i)">
+                      <div class="code-container">
+                        <pre class="code-block"><code>{{ item.responseMessage }}</code></pre>
+                      </div>
+                    </div>
+                    
+                    <!-- Preview Tab Content -->
+                    <div class="tab-content" *ngIf="isPreviewTabActive(i)">
+                      <div class="preview-container">
+                        <div class="preview-notice">
+                          <span class="notice-icon">🖥️</span>
+                          <span>Rendered HTML Preview (Scripts removed for security)</span>
+                        </div>
+                        <div class="html-preview-wrapper">
+                          <div class="html-preview" [innerHTML]="getSafeHtml(item.responseMessage)"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Non-HTML Response -->
+                  <div class="text-response" *ngIf="!isHtmlResponse(item.responseMessage)">
+                    <div class="response-text">{{ item.responseMessage }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
