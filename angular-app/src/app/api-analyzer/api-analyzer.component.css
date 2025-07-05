@@ -1,0 +1,389 @@
+.analyzer-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+  padding: 20px;
+}
+
+.content {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Header Section */
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px;
+  text-align: center;
+  position: relative;
+}
+
+.header h1 {
+  margin: 0 0 10px 0;
+  font-size: 2.5rem;
+}
+
+.header .api-name {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.header .api-name span {
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 5px 15px;
+  border-radius: 20px;
+}
+
+.btn-home {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-home:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Request Panel */
+.request-panel {
+  padding: 30px;
+  border-bottom: 2px solid #f1f3f4;
+}
+
+.request-panel h3 {
+  color: #2d3436;
+  margin-bottom: 25px;
+  font-size: 1.5rem;
+}
+
+/* Method Selection */
+.method-selection {
+  margin-bottom: 25px;
+}
+
+.method-selection label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #636e72;
+}
+
+.method-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.method-btn {
+  padding: 10px 20px;
+  border: 2px solid #ddd;
+  background: white;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.method-btn:hover {
+  border-color: #667eea;
+}
+
+.method-btn.active {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+/* URL Section */
+.url-section {
+  margin-bottom: 25px;
+}
+
+.url-section label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #636e72;
+}
+
+.url-input-container {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.url-input {
+  flex: 1;
+  padding: 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.url-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.run-btn {
+  padding: 15px 30px;
+  background: linear-gradient(45deg, #00b894, #00cec9);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.run-btn:hover:not(:disabled) {
+  background: linear-gradient(45deg, #00a085, #00b7a3);
+  transform: translateY(-2px);
+}
+
+.run-btn:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Body Section */
+.body-section {
+  margin-bottom: 25px;
+}
+
+.body-section label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #636e72;
+}
+
+.body-textarea {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  resize: vertical;
+  min-height: 120px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.body-textarea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+/* Response Panel */
+.response-panel {
+  padding: 30px;
+}
+
+.response-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.response-header h3 {
+  color: #2d3436;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.response-meta {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.status {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  border: 2px solid transparent;
+}
+
+.status.success {
+  background: #00b894;
+  color: white;
+  border-color: #00a085;
+}
+
+.status.error {
+  background: #e74c3c;
+  color: white;
+  border-color: #c0392b;
+}
+
+.time {
+  color: #636e72;
+  font-weight: bold;
+}
+
+/* Loading State */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #636e72;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Response Content */
+.response-content {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.response-json {
+  margin: 0;
+  padding: 20px;
+  background: #2d3748;
+  color: #e2e8f0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* No Response State */
+.no-response {
+  text-align: center;
+  padding: 60px;
+  color: #636e72;
+  background: #f8f9fa;
+  border: 2px dashed #dee2e6;
+  border-radius: 8px;
+}
+
+.no-response p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Error Actions */
+.error-actions {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.btn-log-error {
+  padding: 12px 24px;
+  background: linear-gradient(45deg, #e74c3c, #c0392b);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  min-width: 160px;
+}
+
+.btn-log-error:hover:not(:disabled) {
+  background: linear-gradient(45deg, #c0392b, #a93226);
+  transform: translateY(-2px);
+}
+
+.btn-log-error:disabled {
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-log-error.logged {
+  background: linear-gradient(45deg, #27ae60, #229954);
+}
+
+.btn-log-error.logging {
+  background: linear-gradient(45deg, #f39c12, #e67e22);
+}
+
+.log-hint {
+  margin-top: 10px;
+  color: #636e72;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .analyzer-container {
+    padding: 10px;
+  }
+  
+  .content {
+    border-radius: 10px;
+  }
+  
+  .header {
+    padding: 20px;
+  }
+  
+  .header h1 {
+    font-size: 2rem;
+  }
+  
+  .btn-home {
+    position: static;
+    margin-top: 15px;
+  }
+  
+  .request-panel, .response-panel {
+    padding: 20px;
+  }
+  
+  .url-input-container {
+    flex-direction: column;
+  }
+  
+  .run-btn {
+    width: 100%;
+  }
+  
+  .response-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .response-meta {
+    gap: 10px;
+  }
+}

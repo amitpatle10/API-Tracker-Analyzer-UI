@@ -1,0 +1,27 @@
+<div class="home-container">
+  <div class="button-container">
+    <button class="analyze-button" (click)="openApiNameDialog()">
+      Analyze an API
+    </button>
+  </div>
+</div>
+
+<!-- Modal/Dialog for API name input -->
+<div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>Enter API Name</h3>
+    <input 
+      type="text" 
+      [(ngModel)]="apiName" 
+      placeholder="Enter API name..."
+      class="api-input"
+      (keyup.enter)="analyzeApi()"
+    >
+    <div class="modal-buttons">
+      <button class="btn-cancel" (click)="closeModal()">Cancel</button>
+      <button class="btn-analyze" (click)="analyzeApi()" [disabled]="!apiName.trim()">
+        Analyze
+      </button>
+    </div>
+  </div>
+</div>

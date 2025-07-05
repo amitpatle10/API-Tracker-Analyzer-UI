@@ -1,0 +1,108 @@
+<div class="analyzer-container">
+  <div class="content">
+    <!-- Header -->
+    <div class="header">
+      <h1>🔍 API Analyzer</h1>
+      <p class="api-name">Testing: <span>{{ apiName }}</span></p>
+      <button class="btn-home" (click)="goBackHome()">← Back to Home</button>
+    </div>
+
+    <!-- Request Configuration Panel -->
+    <div class="request-panel">
+      <h3>📡 Request Configuration</h3>
+      
+      <!-- Method Selection -->
+      <div class="method-selection">
+        <label>Request Method:</label>
+        <div class="method-buttons">
+          <button 
+            [class]="'method-btn ' + (requestMethod === 'GET' ? 'active' : '')"
+            (click)="requestMethod = 'GET'">
+            GET
+          </button>
+          <button 
+            [class]="'method-btn ' + (requestMethod === 'POST' ? 'active' : '')"
+            (click)="requestMethod = 'POST'">
+            POST
+          </button>
+        </div>
+      </div>
+
+      <!-- API URL Input -->
+      <div class="url-section">
+        <label for="apiUrl">API URL:</label>
+        <div class="url-input-container">
+          <input 
+            type="text" 
+            id="apiUrl"
+            [(ngModel)]="apiUrl"
+            placeholder="Enter API URL (e.g., https://api.example.com/endpoint)"
+            class="url-input"
+          >
+          <button 
+            class="run-btn"
+            (click)="runApi()"
+            [disabled]="isLoading || !apiUrl.trim()">
+            <span *ngIf="!isLoading">🚀 RUN</span>
+            <span *ngIf="isLoading">⏳ Running...</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Request Body (shown only for POST) -->
+      <div class="body-section" *ngIf="shouldShowRequestBody()">
+        <label for="requestBody">Request Body (JSON):</label>
+        <textarea 
+          id="requestBody"
+          [(ngModel)]="requestBody"
+          placeholder='Enter JSON body here, e.g., {"key": "value"}'
+          class="body-textarea"
+          rows="6">
+        </textarea>
+      </div>
+    </div>
+
+    <!-- Response Viewer -->
+    <div class="response-panel">
+      <div class="response-header">
+        <h3>📋 Response</h3>
+        <div class="response-meta" *ngIf="response">
+          <span class="status" [ngClass]="getStatusClass()">
+            {{ getStatusText() }}
+          </span>
+          <span class="time">⏱️ {{ responseTime }}ms</span>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div class="loading" *ngIf="isLoading">
+        <div class="spinner"></div>
+        <p>Executing API request...</p>
+      </div>
+
+      <!-- Response Content -->
+      <div class="response-content" *ngIf="response && !isLoading">
+        <pre class="response-json">{{ formatJson(response) }}</pre>
+      </div>
+
+      <!-- No Response State -->
+      <div class="no-response" *ngIf="!response && !isLoading">
+        <p>� Response will appear here after running the API</p>
+      </div>
+
+      <!-- Log Error Button -->
+      <div class="error-actions" *ngIf="response && !isLoading">
+        <button 
+          class="btn-log-error" 
+          (click)="logError()"
+          [disabled]="isLogErrorDisabled()"
+          [ngClass]="{'logged': isErrorLogged, 'logging': isLoggingError}">
+          {{ getLogErrorButtonText() }}
+        </button>
+        <p class="log-hint" *ngIf="isErrorLogged">
+          💡 Run a new API request to enable logging again
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
