@@ -15,7 +15,7 @@ A modern Angular 17 application for testing and analyzing APIs with a Postman-li
 ## 🖼️ User Interface
 
 ### 1. Home Page - Landing Screen
-![Home Page](docs/images/home-page.png)
+![Home Page](angular-app/docs/images/home-page.png)
 
 The landing page features a clean, centered design with a prominent "ANALYZE AN API" button. Users can click this button to start their API testing journey.
 
@@ -25,7 +25,7 @@ The landing page features a clean, centered design with a prominent "ANALYZE AN 
 - Hover effects and smooth animations
 
 ### 2. API Name Input Modal
-![API Name Modal](docs/images/api-name-modal.png)
+![API Name Modal](angular-app/docs/images/api-name-modal.png)
 
 When users click the "Analyze an API" button, a modal appears requesting the API name for identification and tracking purposes.
 
@@ -36,7 +36,7 @@ When users click the "Analyze an API" button, a modal appears requesting the API
 - Real-time form validation
 
 ### 3. API Analyzer - Main Testing Interface
-![API Analyzer Interface](docs/images/api-analyzer-interface.png)
+![API Analyzer Interface](angular-app/docs/images/api-analyzer-interface.png)
 
 The main testing interface provides a comprehensive API testing environment similar to Postman.
 
